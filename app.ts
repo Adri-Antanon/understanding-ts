@@ -1,14 +1,20 @@
-// object named Person with name Adri and age 28
+// enum  with admin, read_only and user roles
+enum Role {
+    ADMIN = 'ADMIN',
+    READ_ONLY = 'READ_ONLY',
+    USER = 'USER'
+}
+// enum with the status of the user
 const person: {
     name: string;
     age: number;
     hobbies: string[];
-    role: [number, string];
+    role: Role;
 } = {
     name: "Adri",
     age: 28,
     hobbies: ["Sports", "Cooking"],
-    role: [2, "author"]
+    role: Role.ADMIN
 };
 
 for (const hobby of person.hobbies) {
