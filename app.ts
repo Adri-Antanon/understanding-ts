@@ -7,3 +7,7 @@ const printResult = (num: number): void => {
 };
 
 printResult(add(5, 12));
+
+let combinedValues: (a: number, b: number) => number;
+
+combinedValues = add;
