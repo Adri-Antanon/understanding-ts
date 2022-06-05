@@ -1,22 +1,13 @@
-// enum  with admin, read_only and user roles
-enum Role {
-    ADMIN = 'ADMIN',
-    READ_ONLY = 'READ_ONLY',
-    USER = 'USER'
-}
-// enum with the status of the user
-const person: {
-    name: string;
-    age: number;
-    hobbies: string[];
-    role: Role;
-} = {
-    name: "Adri",
-    age: 28,
-    hobbies: ["Sports", "Cooking"],
-    role: Role.ADMIN
+type Combine = number | string;
+
+const combine = (n1: Combine, n2: Combine): Combine => {
+  let result: Combine;
+  if (typeof n1 === 'number' && typeof n2 === 'number') {
+    result = n1 + n2;
+  } else {
+    result = n1.toString() + n2.toString();
+  }
+  return result;
 };
 
-for (const hobby of person.hobbies) {
-    console.log(hobby.toUpperCase());
-}
+const combinedAges = combine(30, 12);
