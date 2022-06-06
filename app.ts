@@ -1,14 +1,34 @@
-let userInput: unknown;
-let userName: string;
+// type Admin = {
+//   name: string;
+//   privileges: string[];
+// };
 
-userInput = 5;
-userInput = 'Max';
-if (typeof userInput === 'string') {
-  userName = userInput;
+// type Employee = {
+//   name: string;
+//   startDate: Date;
+// };
+
+// type ElevatedEmployee = Admin & Employee;
+
+interface Admin {
+  name: string;
+  privileges: string[];
 }
 
-const generateError = (message: string, code: number): never => {
-  throw { message: message, errorCode: code };
+interface Employee {
+  name: string;
+  startDate: Date;
+}
+
+interface ElevatedEmployee extends Admin, Employee {}
+
+const e1: ElevatedEmployee = {
+  name: 'Max',
+  privileges: ['create-server'],
+  startDate: new Date(),
 };
 
-generateError('An error occurred!', 500);
+type Combinable = string | number;
+type Numeric = number | boolean;
+
+type Universal = Combinable & Numeric;
