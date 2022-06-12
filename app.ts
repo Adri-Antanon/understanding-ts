@@ -132,4 +132,25 @@ const errorBag: ErrorContainer = {
   password: 'Must be at least 8 characters!',
 };
 
-// Function Overloads
+// Optional chaining properties
+
+interface Person {
+  name: string;
+  id: string;
+  job?: {
+    title: string;
+    company: string;
+  };
+  location?: {
+    city: string;
+    country: string;
+  };
+}
+const fetchedUserData: Person = {
+  id: 'u1',
+  name: 'Max',
+  //   job: { title: 'CEO', description: 'My own company' },
+  location: { city: 'Berlin', country: 'Germany' },
+};
+
+console.log(fetchedUserData?.job && fetchedUserData.job.title);
