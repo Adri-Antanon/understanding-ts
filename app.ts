@@ -154,3 +154,7 @@ const fetchedUserData: Person = {
 };
 
 console.log(fetchedUserData?.job && fetchedUserData.job.title);
+
+const userInput2 = null;
+
+const storedData = userInput2 ?? 'DEFAULT';
