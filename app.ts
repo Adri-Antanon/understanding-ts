@@ -33,12 +33,18 @@ type Numeric = number | boolean;
 
 type Universal = Combinable & Numeric;
 
-const add = (a: Combinable, b: Combinable): Combinable => {
+// El overload no funciona con las arrow function
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: Combinable, b: Combinable) {
   if (typeof a === 'string' || typeof b === 'string') {
     return a.toString() + b.toString();
   }
   return a + b;
-};
+}
+
+const result = add('Adri', '5'); //Puedo llamar a la función split gracias a decirle que es un string
+result.split('').forEach((c) => console.log(c.toUpperCase()));
 
 type UnknownEmployee = Employee | Admin;
 
@@ -118,6 +124,12 @@ moveAnimal({ type: 'horse', runningSpeed: 50 });
 // Index Types
 
 interface ErrorContainer {
-  id: string;
   [prop: string]: string;
 }
+
+const errorBag: ErrorContainer = {
+  email: 'Not a valid email!',
+  password: 'Must be at least 8 characters!',
+};
+
+// Function Overloads
