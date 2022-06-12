@@ -114,3 +114,10 @@ function moveAnimal(animal: Animal) {
 moveAnimal({ type: 'bird', flyingSpeed: 10 });
 
 moveAnimal({ type: 'horse', runningSpeed: 50 });
+
+// Index Types
+
+interface ErrorContainer {
+  id: string;
+  [prop: string]: string;
+}
