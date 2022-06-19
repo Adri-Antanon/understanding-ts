@@ -22,10 +22,10 @@ interface ObjB {
 }
 
 type OtherProps = {
-  hobbies: string[];
+  hobbies?: string[];
 };
 
-const merge = <T, U>(objA: T, objB: U) => {
+const merge = <T extends object, U extends object>(objA: T, objB: U) => {
   return Object.assign(objA, objB);
 };
 
@@ -39,3 +39,37 @@ const mergedObj2 = merge<ObjA, ObjB & OtherProps>(
 );
 
 console.log(mergedObj2.hobbies);
+
+interface Lengthy {
+  length: number;
+}
+
+const countAndDescribe = <T extends Lengthy>(
+  element: T | T[],
+): [T | T[], string] | string => {
+  let descriptionText = 'The list has ' + element.length + ' elements: ';
+  if (element.length > 1) {
+    descriptionText += element[0];
+    for (let i = 1; i < element.length; i++) {
+      descriptionText += ', ' + element[i];
+    }
+  }
+
+  if (!Array.isArray(element)) {
+    descriptionText = 'The list only has one element: ' + element;
+  }
+
+  return [element, descriptionText];
+};
+
+const namesList = countAndDescribe<string>(['Adri', 'Juan', 'Pedro']);
+
+console.log(namesList);
+
+const emptyList = countAndDescribe<string>([]);
+
+console.log(emptyList);
+
+const oneNameList = countAndDescribe<string>('Adri');
+
+console.log(oneNameList);
