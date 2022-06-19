@@ -1,160 +1,41 @@
-// type Admin = {
-//   name: string;
-//   privileges: string[];
-// };
+// Generics: <T>
 
-// type Employee = {
-//   name: string;
-//   startDate: Date;
-// };
+// This is not generic by the way, but it's a good example of how to pass a type as a parameter to a function.
+// const names: Array<string> = [];
+// names[0] = 'Adri';
+// names[0].split('').forEach((c) => console.log(c.toUpperCase()));
 
-// type ElevatedEmployee = Admin & Employee;
+// const promise = new Promise<string>((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('This is done!');
+//   }, 2000);
+// }).then((data) => console.log(data.split('').reverse().join('')));
 
-interface Admin {
+// Generics allow us to create a reusable type that can be used in multiple places.
+
+interface ObjA {
   name: string;
-  privileges: string[];
 }
 
-interface Employee {
-  name: string;
-  startDate: Date;
+interface ObjB {
+  age: number;
 }
 
-interface ElevatedEmployee extends Admin, Employee {}
-
-const e1: ElevatedEmployee = {
-  name: 'Max',
-  privileges: ['create-server'],
-  startDate: new Date(),
+type OtherProps = {
+  hobbies: string[];
 };
 
-type Combinable = string | number;
-type Numeric = number | boolean;
-
-type Universal = Combinable & Numeric;
-
-// El overload no funciona con las arrow function
-function add(a: number, b: number): number;
-function add(a: string, b: string): string;
-function add(a: Combinable, b: Combinable) {
-  if (typeof a === 'string' || typeof b === 'string') {
-    return a.toString() + b.toString();
-  }
-  return a + b;
-}
-
-const result = add('Adri', '5'); //Puedo llamar a la función split gracias a decirle que es un string
-result.split('').forEach((c) => console.log(c.toUpperCase()));
-
-type UnknownEmployee = Employee | Admin;
-
-const printEmployeeInformation = (emp: UnknownEmployee) => {
-  console.log('Name: ' + emp.name);
-  if ('privileges' in emp) {
-    console.log('Privileges: ' + emp.privileges);
-  }
-  if ('startDate' in emp) {
-    console.log('Start Date: ' + emp.startDate);
-  }
+const merge = <T, U>(objA: T, objB: U) => {
+  return Object.assign(objA, objB);
 };
 
-printEmployeeInformation({ name: 'Max', startDate: new Date() });
+const mergedObj = merge<ObjA, ObjB>({ name: 'Adri' }, { age: 28 });
 
-class Car {
-  drive() {
-    console.log('Driving...');
-  }
-}
+console.log(mergedObj.age);
 
-class Truck {
-  drive() {
-    console.log('Driving a truck...');
-  }
+const mergedObj2 = merge<ObjA, ObjB & OtherProps>(
+  { name: 'Adri' },
+  { age: 28, hobbies: ['Sports', 'Cooking'] },
+);
 
-  loadCargo(amount: number) {
-    console.log('Loading cargo... ' + amount);
-  }
-}
-
-type Vehicle = Car | Truck;
-
-const v1 = new Car();
-const v2 = new Truck();
-
-const useVehicle = (vehicle: Vehicle) => {
-  vehicle.drive();
-  if (vehicle instanceof Truck) {
-    vehicle.loadCargo(1000);
-  }
-};
-
-useVehicle(v1);
-useVehicle(v2);
-
-interface Bird {
-  type: 'bird';
-  flyingSpeed: number;
-}
-
-interface Horse {
-  type: 'horse';
-  runningSpeed: number;
-}
-
-type Animal = Bird | Horse;
-
-function moveAnimal(animal: Animal) {
-  let speed: number;
-  switch (animal.type) {
-    case 'bird':
-      speed = animal.flyingSpeed;
-      break;
-    case 'horse':
-      speed = animal.runningSpeed;
-      break;
-  }
-
-  console.log('Moving at speed: ' + speed);
-}
-
-moveAnimal({ type: 'bird', flyingSpeed: 10 });
-
-moveAnimal({ type: 'horse', runningSpeed: 50 });
-
-// Index Types
-
-interface ErrorContainer {
-  [prop: string]: string;
-}
-
-const errorBag: ErrorContainer = {
-  email: 'Not a valid email!',
-  password: 'Must be at least 8 characters!',
-};
-
-// Optional chaining properties
-
-interface Person {
-  name: string;
-  id: string;
-  job?: {
-    title: string;
-    company: string;
-  };
-  location?: {
-    city: string;
-    country: string;
-  };
-}
-const fetchedUserData: Person = {
-  id: 'u1',
-  name: 'Max',
-  //   job: { title: 'CEO', description: 'My own company' },
-  location: { city: 'Berlin', country: 'Germany' },
-};
-
-console.log(fetchedUserData?.job && fetchedUserData.job.title);
-
-const userInput2 = null;
-
-const storedData = userInput2 ?? 'DEFAULT';
+console.log(mergedObj2.hobbies);
