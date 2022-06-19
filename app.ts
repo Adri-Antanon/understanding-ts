@@ -73,3 +73,12 @@ console.log(emptyList);
 const oneNameList = countAndDescribe<string>('Adri');
 
 console.log(oneNameList);
+
+const extractAndConvert = <T extends object, U extends keyof T>(
+  obj: T,
+  key: U,
+): T[U] => {
+  return obj[key];
+};
+
+console.log('value: ', extractAndConvert({ name: 'Adri' }, 'name'));
